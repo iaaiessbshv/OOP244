@@ -1,14 +1,23 @@
-/***********************************************************************
-// OOP244 Workshop 5: Mark Module
-// Name: Issa Abishev
-// Email: iabishev@myseneca.ca
-// SID: 175980234
-// Course: OOP244NAA
-// File	Mark.cpp
-// Version 1.0:
-// - Date	2025/06/12
-// Author	partially done by Fardad Soleimanloo
-***********************************************************************/
+/* Citation and Sources...
+-----------------------------------------------------------
+Workshop 5
+Module: Mark.h
+Filename: Mark.cpp
+-----------------------------------------------------------
+Author: Issa Abishev
+Student number: 175980234
+Email: iabishev@myseneca.ca
+Subject: OOP244NAA
+-----------------------------------------------------------
+Revision History
+------- --------- ------------------------------------------
+Version Date      Reason
+V1.0    2025/3/4  Ready for submission
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my work for function whatever.
+-----------------------------------------------------------
+*/
 #include "Mark.h"
 #include <cmath> // for round function
 #include <fstream>
