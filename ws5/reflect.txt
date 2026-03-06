@@ -1,0 +1,5 @@
+In this workshop , I improved my understanding of operator overloading in C++. I also learned how to use 'std::ostream' and 'std::istream' for formatted input and output. One important thing was making input safer by checking the stream state and making sure extra or invalid characters from the user don’t cause problems.
+
+The most difficult part of the lab was creating the foolproof extraction operator. It was tricky to handle cases where the user types a correct number but also adds extra characters after it. I had to use `is.fail()`, `is.get()`, and `is.ignore()` in the right order. I also spent quite some time debugging to make sure the stream was cleared properly so the program could read the next input without errors.
+
+The arithmetic operators like '+' and '-' were much easier. After implementing the '+=' and '-=' operators, the rest was straightforward. Overall, this lab showed me how operator overloading can make a class behave more like a normal C++ type while still keeping the data properly organized and protected.
