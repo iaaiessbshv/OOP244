@@ -1,10 +1,12 @@
 /***********************************************************************
 // OOP244 Workshop 5: Mark Module
 // Name: Issa Abishev
+// Email: iabishev@myseneca.ca
 // SID: 175980234
+// Course: OOP244NAA
 // File	Mark.cpp
-// Version 1.0
-// Date	2025/06/12
+// Version 1.0:
+// - Date	2025/06/12
 // Author	partially done by Fardad Soleimanloo
 ***********************************************************************/
 #include "Mark.h"
