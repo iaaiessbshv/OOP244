@@ -1,9 +1,21 @@
-/*
- Name: Issa Abishev
- Course: OOP244 NAA
- Date: March 6th , 2026
- _______________________
- Partially completed by professor Fardad Soleimanloo
+/* Citation and Sources...
+-----------------------------------------------------------
+Module: Label.h
+Filename: Label.cpp
+-----------------------------------------------------------
+Author: Issa Abishev
+Student number: 175980234
+Email: iabishev@myseneca.ca
+Subject: OOP244NAA
+-----------------------------------------------------------
+Revision History
+------- --------- ------------------------------------------
+Version Date      Reason
+V1.0    2025/3/6  Ready for submission
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my work for function whatever.
+-----------------------------------------------------------
 */
 
 #include "Label.h"
@@ -22,7 +34,6 @@ Label::Label(const char *text, char fill) {
 
 Label::~Label() { delete[] m_text; }
 
-// Copy constructor
 Label::Label(const Label &other) {
   m_fill = other.m_fill;
   if (other.m_text) {
@@ -31,7 +42,6 @@ Label::Label(const Label &other) {
   }
 }
 
-// Copy assignment operator
 Label &Label::operator=(const Label &other) {
   if (this != &other) {
     delete[] m_text;
@@ -45,7 +55,6 @@ Label &Label::operator=(const Label &other) {
   return *this;
 }
 
-// Assignment to text: replaces m_text with new text / resets to safe empty
 Label &Label::operator=(const char *text) {
   delete[] m_text;
   m_text = nullptr;
@@ -69,7 +78,6 @@ ostream &Label::print(ostream &ostr) const {
   return ostr;
 }
 
-// insertion operator
 ostream &operator<<(ostream &ostr, const Label &label) {
   return label.print(ostr);
 }
