@@ -5,7 +5,7 @@ Module: Menu
 Filename: Menu.h
 -----------------------------------------------------------
 Author: Issa Abishev
-Student number: 175 980 234
+Student number: 175980234
 Email: iabishev@myseneca.ca
 Subject: OOP244NAA
 -----------------------------------------------------------
