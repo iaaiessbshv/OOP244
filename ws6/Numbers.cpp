@@ -24,15 +24,11 @@ that my professor provided to complete my work for function whatever.
 #include <iostream>
 using namespace std;
 namespace seneca {
-
-// Destructor
 Numbers::~Numbers() {
   save();
   delete[] m_numbers;
   delete[] m_filename;
 }
-
-// Copy Constructor
 Numbers::Numbers(const Numbers &other) {
   setEmpty();
   m_isOriginal = false;
@@ -41,7 +37,6 @@ Numbers::Numbers(const Numbers &other) {
     m_numbers[i] = other.m_numbers[i];
   m_numCount = other.m_numCount;
 }
-
 // Copy Assignment Operator
 Numbers &Numbers::operator=(const Numbers &other) {
   if (this != &other) {
@@ -53,8 +48,6 @@ Numbers &Numbers::operator=(const Numbers &other) {
   }
   return *this;
 }
-
-// numberCount
 int Numbers::numberCount() const {
   int count = 0;
   char ch;
@@ -65,8 +58,6 @@ int Numbers::numberCount() const {
   }
   return count;
 }
-
-// load
 bool Numbers::load() {
   bool result = false;
   if (m_numCount > 0) {
@@ -88,8 +79,6 @@ bool Numbers::load() {
   }
   return result;
 }
-
-// save
 void Numbers::save() const {
   if (m_isOriginal && !isEmpty()) {
     ofstream f(m_filename);
@@ -97,8 +86,6 @@ void Numbers::save() const {
       f << m_numbers[i] << "\n";
   }
 }
-
-// operator+=
 Numbers &Numbers::operator+=(double value) {
   if (!isEmpty()) {
     double *temp = new double[m_numCount + 1];
@@ -112,8 +99,6 @@ Numbers &Numbers::operator+=(double value) {
   }
   return *this;
 }
-
-// display
 std::ostream &Numbers::display(std::ostream &ostr) const {
   if (isEmpty()) {
     ostr << "Empty list";
@@ -141,10 +126,7 @@ std::ostream &Numbers::display(std::ostream &ostr) const {
   }
   return ostr;
 }
-
-// Helper operators
 ostream &operator<<(ostream &os, const Numbers &N) { return N.display(os); }
-
 istream &operator>>(istream &istr, Numbers &N) {
   double val;
   istr >> val;
@@ -152,5 +134,4 @@ istream &operator>>(istream &istr, Numbers &N) {
     N += val;
   return istr;
 }
-
 } // namespace seneca
