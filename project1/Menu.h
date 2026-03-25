@@ -13,8 +13,7 @@ Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
 V1.0    2025/03/09  Milestone 1: MenuItem class
-V2.0    2026/03/25  Milestone 2: Added full Menu class, operator<<,select(),
-ostream operator<<, Rule of Three
+V2.0    2026/03/25  Milestone 2: Added full Menu class
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
@@ -26,7 +25,6 @@ that my professor provided to complete my work for function whatever.
 #include <iostream>
 namespace seneca {
 
-// Forward declaration
 class Menu;
 
 class MenuItem {
@@ -44,7 +42,7 @@ class MenuItem {
   operator bool() const;
   std::ostream &display(std::ostream &ostr = std::cout) const;
 
-  // Only Menu can use MenuItem
+  // Only Menu is a friend
   friend class Menu;
 };
 

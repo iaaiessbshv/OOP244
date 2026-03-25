@@ -60,13 +60,13 @@ bool Utils::isspace(const char *cstring) const {
   return cstring && *cstring == 0;
 }
 
-// Returns a valid integer from cin, with full validation.
+// Returns a valid integer from cin
 int Utils::getInt() const {
   int value{};
   bool valid = false;
   while (!valid) {
     if (cin.peek() == '\n') {
-      // Empty input — user just pressed Enter
+      // Empty input-user just pressed Enter
       cout << "You must enter a value: ";
       cin.ignore(); // consume the newline
     } else {
@@ -81,7 +81,7 @@ int Utils::getInt() const {
         cin.ignore(1000, '\n');
         cout << "Only an integer please: ";
       } else {
-        // All good — consume the newline and break
+        // All good-consume the newline and break
         cin.ignore();
         valid = true;
       }

@@ -28,9 +28,7 @@ public:
   int getInt() const;
   int getInt(int min, int max) const;
 };
-extern Utils ut; // makes the ut object available where Utils.h is included
-                 // to call a Utils function call it as follows
-                 // ut.strcpy(des, src);
+extern Utils ut;
 } // namespace seneca
 
 #endif // !SENECA_UTILS_H
