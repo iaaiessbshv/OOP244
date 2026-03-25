@@ -1,15 +1,17 @@
 /***********************************************************************
 // OOP244 Project, Utils Module
 //
-// File	Utils.h
-// Version 0.1
+// File  Utils.h
+// Version 0.2
 // started by Fardad
 // Description
 // utility function to be used in the project
 // Revision History
 // -----------------------------------------------------------
-// Name            Date            Reason
-//
+// Name               Date          Reason
+// Fardad             -             Initial version
+// Issa Abishev       2026/03/25    Milestone 2: Added getInt() and getInt(int
+min, int max)
 /////////////////////////////////////////////////////////////////
 ***********************************************************************/
 #ifndef SENECA_UTILS_H
@@ -23,6 +25,8 @@ public:
   int strlen(const char *str) const;
   bool isspace(char ch) const;
   bool isspace(const char *cstring) const;
+  int getInt() const;
+  int getInt(int min, int max) const;
 };
 extern Utils ut; // makes the ut object available where Utils.h is included
                  // to call a Utils function call it as follows

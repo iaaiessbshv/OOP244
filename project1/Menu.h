@@ -1,6 +1,6 @@
 /* Citation and Sources...
 -----------------------------------------------------------
-Project Milestone 1
+Project Milestone 2
 Module: Menu
 Filename: Menu.h
 -----------------------------------------------------------
@@ -12,7 +12,9 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2025/3/9  Ready for submission
+V1.0    2025/03/09  Milestone 1: MenuItem class
+V2.0    2026/03/25  Milestone 2: Added full Menu class, operator<<,select(),
+ostream operator<<, Rule of Three
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
@@ -20,26 +22,57 @@ that my professor provided to complete my work for function whatever.
 */
 #ifndef SENECA_MENU_H
 #define SENECA_MENU_H
+#include "constants.h"
 #include <iostream>
 namespace seneca {
+
+// Forward declaration
+class Menu;
+
 class MenuItem {
-private:
   char *m_content;
   unsigned int m_indentNum;
   unsigned int m_indentSize;
   int m_itemNumber;
   void setEmptyState();
-
-public:
   MenuItem(const char *content, unsigned int indents = 0,
            unsigned int indentSize = 0, int row = -1);
   // Rule of Three
   MenuItem(const MenuItem &) = delete;
   MenuItem &operator=(const MenuItem &) = delete;
   ~MenuItem();
-
   operator bool() const;
   std::ostream &display(std::ostream &ostr = std::cout) const;
+
+  // Only Menu can use MenuItem
+  friend class Menu;
 };
+
+class Menu {
+  unsigned int m_indentNum;
+  unsigned int m_indentSize;
+  unsigned int m_numItems;
+  MenuItem m_title;
+  MenuItem m_exitOption;
+  MenuItem m_selectionPrompt;
+  MenuItem *m_items[MaximumNumberOfMenuItems];
+
+  // Rule of Three – copying/assignment explicitly prevented
+  // Menu(const Menu&) = delete;
+  // Menu& operator=(const Menu&) = delete;
+
+public:
+  Menu(const char *title, const char *exitOption = "Exit",
+       unsigned int indentNum = 0, unsigned int indentSize = 3);
+  ~Menu();
+  Menu(const Menu &) = delete;
+  Menu &operator=(const Menu &) = delete;
+
+  Menu &operator<<(const char *menuItem);
+  size_t select() const;
+};
+
+size_t operator<<(std::ostream &ostr, const Menu &m);
+
 } // namespace seneca
 #endif

@@ -1,15 +1,17 @@
 /***********************************************************************
 // OOP244 Project, Utils Module
 //
-// File	Utils.h
-// Version 0.1
+// File  Utils.cpp
+// Version 0.2
 // started by Fardad
 // Description
 // utility function to be used in the project
 // Revision History
 // -----------------------------------------------------------
-// Name            Date            Reason
-//
+// Name               Date          Reason
+// Fardad             -             Initial version
+// Issa Abishev       2026/03/25    Milestone 2: Added getInt() and getInt(int
+min, int max)
 /////////////////////////////////////////////////////////////////
 ***********************************************************************/
 #include "Utils.h"
@@ -56,6 +58,52 @@ bool Utils::isspace(const char *cstring) const {
     cstring++;
   }
   return cstring && *cstring == 0;
+}
+
+// Returns a valid integer from cin, with full validation.
+int Utils::getInt() const {
+  int value{};
+  bool valid = false;
+  while (!valid) {
+    if (cin.peek() == '\n') {
+      // Empty input — user just pressed Enter
+      cout << "You must enter a value: ";
+      cin.ignore(); // consume the newline
+    } else {
+      cin >> value;
+      if (cin.fail()) {
+        // Non-integer data entered
+        cin.clear();
+        cin.ignore(1000, '\n');
+        cout << "Invalid integer: ";
+      } else if (cin.peek() != '\n') {
+        // Extra characters after the integer
+        cin.ignore(1000, '\n');
+        cout << "Only an integer please: ";
+      } else {
+        // All good — consume the newline and break
+        cin.ignore();
+        valid = true;
+      }
+    }
+  }
+  return value;
+}
+
+// Returns a valid integer in [min, max] from cin.
+int Utils::getInt(int min, int max) const {
+  int value{};
+  bool valid = false;
+  while (!valid) {
+    value = getInt();
+    if (value < min || value > max) {
+      cout << "Invalid value: [" << min << " <= value <= " << max
+           << "], try again: ";
+    } else {
+      valid = true;
+    }
+  }
+  return value;
 }
 
 } // namespace seneca
