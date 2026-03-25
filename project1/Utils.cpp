@@ -10,7 +10,7 @@
 // -----------------------------------------------------------
 // Name               Date          Reason
 // Fardad             -             Initial version
-// Issa Abishev       2026/03/25    Milestone 2: Added getInt() and
+// Issa Abishev       2026/03/21    Milestone 2: Added getInt() and
 //                                  getInt(int min, int max)
 /////////////////////////////////////////////////////////////////
 ***********************************************************************/

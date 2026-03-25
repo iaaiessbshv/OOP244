@@ -13,7 +13,7 @@ Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
 V1.0    2025/03/09  Milestone 1: MenuItem class
-V2.0    2026/03/25  Milestone 2: Added full Menu class
+V2.0    2026/03/21  Milestone 2: Added full Menu class
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
@@ -62,6 +62,8 @@ class Menu {
 public:
   Menu(const char *title, const char *exitOption = "Exit",
        unsigned int indentNum = 0, unsigned int indentSize = 3);
+
+  // Rule of three
   ~Menu();
   Menu(const Menu &) = delete;
   Menu &operator=(const Menu &) = delete;
@@ -71,6 +73,5 @@ public:
 };
 
 size_t operator<<(std::ostream &ostr, const Menu &m);
-
 } // namespace seneca
 #endif

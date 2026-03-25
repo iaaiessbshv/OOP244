@@ -13,7 +13,7 @@ Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
 V1.0    2025/03/09  Milestone 1: MenuItem implementation
-V2.0    2026/03/25  Milestone 2: Menu class implementation
+V2.0    2026/03/21  Milestone 2: Menu class implementation
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
