@@ -10,8 +10,8 @@
 // -----------------------------------------------------------
 // Name               Date          Reason
 // Fardad             -             Initial version
-// Issa Abishev       2026/03/25    Milestone 2: Added getInt() and getInt(int
-min, int max)
+// Issa Abishev       2026/03/25    Milestone 2: Added getInt() and
+//                                  getInt(int min, int max)
 /////////////////////////////////////////////////////////////////
 ***********************************************************************/
 #include "Utils.h"
@@ -21,7 +21,7 @@ namespace seneca {
 Utils ut;
 
 char *Utils::alocpy(const char *src) const {
-  char *des{};
+  char *des = nullptr;
   return alocpy(des, src);
 }
 
@@ -34,6 +34,7 @@ char *Utils::alocpy(char *&des, const char *src) const {
   }
   return des;
 }
+
 char *Utils::strcpy(char *des, const char *src) const {
   int i;
   for (i = 0; src[i]; i++)
@@ -41,6 +42,7 @@ char *Utils::strcpy(char *des, const char *src) const {
   des[i] = char(0);
   return des;
 }
+
 int Utils::strlen(const char *str) const {
   int len;
   for (len = 0; str[len]; len++)
@@ -54,56 +56,42 @@ bool Utils::isspace(char ch) const {
 }
 
 bool Utils::isspace(const char *cstring) const {
-  while (cstring && isspace(*cstring)) {
+  while (cstring && isspace(*cstring))
     cstring++;
-  }
   return cstring && *cstring == 0;
 }
 
-// Returns a valid integer from cin
 int Utils::getInt() const {
-  int value{};
-  bool valid = false;
-  while (!valid) {
+  int value = 0;
+  while (true) {
     if (cin.peek() == '\n') {
-      // Empty input-user just pressed Enter
       cout << "You must enter a value: ";
-      cin.ignore(); // consume the newline
+      cin.ignore();
     } else {
       cin >> value;
       if (cin.fail()) {
-        // Non-integer data entered
         cin.clear();
         cin.ignore(1000, '\n');
         cout << "Invalid integer: ";
       } else if (cin.peek() != '\n') {
-        // Extra characters after the integer
         cin.ignore(1000, '\n');
         cout << "Only an integer please: ";
       } else {
-        // All good-consume the newline and break
         cin.ignore();
-        valid = true;
+        return value;
       }
     }
   }
-  return value;
 }
 
-// Returns a valid integer in [min, max] from cin.
 int Utils::getInt(int min, int max) const {
-  int value{};
-  bool valid = false;
-  while (!valid) {
+  int value = 0;
+  do {
     value = getInt();
-    if (value < min || value > max) {
+    if (value < min || value > max)
       cout << "Invalid value: [" << min << " <= value <= " << max
            << "], try again: ";
-    } else {
-      valid = true;
-    }
-  }
+  } while (value < min || value > max);
   return value;
 }
-
 } // namespace seneca
