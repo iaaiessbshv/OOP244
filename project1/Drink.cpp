@@ -28,7 +28,7 @@ bool Drink::ordered() const {
   return m_size == 'S' || m_size == 'M' || m_size == 'L' || m_size == 'X';
 }
 bool Drink::order() {
-  std::cout << "   Drink Size Selection\n"
+  std::cout << "        Drink Size Selection\n"
             << "   1- Small\n"
             << "   2- Medium\n"
             << "   3- Larg\n"
