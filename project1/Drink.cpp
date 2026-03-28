@@ -19,14 +19,14 @@ that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 #include "Drink.h"
-#include "Billable.h"
 #include "Utils.h"
 #include <iostream>
-#include <ostream>
 namespace seneca {
+
 bool Drink::ordered() const {
   return m_size == 'S' || m_size == 'M' || m_size == 'L' || m_size == 'X';
 }
+
 bool Drink::order() {
   std::cout << "         Drink Size Selection\n"
             << "          1- Small\n"
@@ -34,8 +34,10 @@ bool Drink::order() {
             << "          3- Larg\n"
             << "          4- Extra Large\n"
             << "          0- Back\n"
-            << "> ";
+            << "         > ";
+
   int choice = ut.getInt(0, 4);
+
   switch (choice) {
   case 1:
     m_size = 'S';
@@ -55,38 +57,35 @@ bool Drink::order() {
   }
   return ordered();
 }
+
 double Drink::price() const {
   switch (m_size) {
   case 'S':
     return Billable::price() * 0.5;
-    break;
   case 'M':
     return Billable::price() * 0.75;
-    break;
   case 'L':
     return Billable::price();
-    break;
   case 'X':
     return Billable::price() * 1.5;
-    break;
   }
   return Billable::price();
 }
 
 std::ostream &Drink::print(std::ostream &ostr) const {
-  const char *n = operator const char *();
+  const char *n = *this;
+
   int i = 0;
   if (n) {
-    for (; i < 25 && n[i]; i++) {
+    for (; i < 25 && n[i]; i++)
       ostr << n[i];
-    }
   }
-  for (; i < 28; i++) {
+  for (; i < 28; i++)
     ostr << '.';
-  }
-  if (!ordered()) {
+
+  if (!ordered())
     ostr << ".....";
-  } else {
+  else {
     switch (m_size) {
     case 'S':
       ostr << "SML..";
@@ -103,8 +102,9 @@ std::ostream &Drink::print(std::ostream &ostr) const {
     }
   }
 
+  // truncate, don't round
   double p = price();
-  long long cents = (long long)(p * 100.0 + 0.5);
+  long long cents = (long long)(p * 100.0);
   long long dollars = cents / 100;
   int decimal = (int)(cents % 100);
 
@@ -135,6 +135,7 @@ std::ostream &Drink::print(std::ostream &ostr) const {
   for (int s = len; s < 7; s++)
     ostr << ' ';
   ostr << tmp;
+
   return ostr;
 }
 
@@ -145,11 +146,13 @@ std::ifstream &Drink::read(std::ifstream &file) {
   file.getline(tempName, 128, ',');
   file >> tempPrice;
   file.ignore();
+
   if (file) {
     name(tempName);
-    Billable::price(tempPrice);
+    price(tempPrice);
     m_size = '\0';
   }
   return file;
 }
+
 } // namespace seneca

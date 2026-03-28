@@ -19,25 +19,29 @@ that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 #include "Food.h"
-#include "Billable.h"
 #include "Utils.h"
-#include <ostream>
+#include <iostream>
 namespace seneca {
+
 Food::Food(const Food &other) { *this = other; }
+
 Food &Food::operator=(const Food &other) {
   if (this != &other) {
-    Billable::operator=(other); // copy base class (name, price)
+    Billable::operator=(other);
     m_ordered = other.m_ordered;
     m_child = other.m_child;
     ut.alocpy(m_customize, other.m_customize);
   }
   return *this;
 }
+
 Food::~Food() {
   delete[] m_customize;
   m_customize = nullptr;
 }
+
 bool Food::ordered() const { return m_ordered; }
+
 double Food::price() const {
   if (m_ordered && m_child)
     return Billable::price() * 0.5;
@@ -55,13 +59,14 @@ std::ostream &Food::print(std::ostream &ostr) const {
   for (; i < 28; i++)
     ostr << '.';
 
-  // Portion type: 5 chars
   if (!ordered())
     ostr << ".....";
   else
     ostr << (m_child ? "Child" : "Adult");
+
+  // truncate, don't round
   double p = price();
-  long long cents = (long long)(p * 100.0 + 0.5);
+  long long cents = (long long)(p * 100.0);
   long long dollars = cents / 100;
   int decimal = (int)(cents % 100);
 
@@ -92,19 +97,22 @@ std::ostream &Food::print(std::ostream &ostr) const {
   for (int s = len; s < 7; s++)
     ostr << ' ';
   ostr << tmp;
+
   if (m_customize && &ostr == &std::cout) {
     ostr << " >> ";
     for (int j = 0; j < 30 && m_customize[j]; j++)
       ostr << m_customize[j];
   }
+
   return ostr;
 }
+
 bool Food::order() {
-  std::cout << "Food Size Selection\n"
-            << "   1- Adult\n"
-            << "   2- Child\n"
-            << "   0- Back\n"
-            << "> ";
+  std::cout << "         Food Size Selection\n"
+            << "          1- Adult\n"
+            << "          2- Child\n"
+            << "          0- Back\n"
+            << "         > ";
 
   int choice = ut.getInt(0, 2);
 
@@ -118,7 +126,6 @@ bool Food::order() {
   m_child = (choice == 2);
   m_ordered = true;
 
-  // Prompt for customization
   std::cout << "Special instructions\n> ";
   char buf[128] = {};
   std::cin.getline(buf, 128);
@@ -131,6 +138,7 @@ bool Food::order() {
 
   return true;
 }
+
 std::ifstream &Food::read(std::ifstream &file) {
   char tempName[128];
   double tempPrice = 0;
@@ -141,7 +149,7 @@ std::ifstream &Food::read(std::ifstream &file) {
 
   if (file) {
     name(tempName);
-    Billable::price(tempPrice);
+    price(tempPrice);
     m_child = false;
     m_ordered = false;
     delete[] m_customize;
@@ -149,4 +157,5 @@ std::ifstream &Food::read(std::ifstream &file) {
   }
   return file;
 }
+
 } // namespace seneca
