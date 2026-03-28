@@ -12,142 +12,141 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2026/03/25  Milestone 3: Food class implementation
+V1.0    2025/03/26  Milestone 3: Billable , Food, Drink class
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 #include "Food.h"
-#include "Menu.h"
+#include "Billable.h"
 #include "Utils.h"
-#include <cstring>
-#include <fstream>
-#include <iomanip>
-#include <iostream>
-using namespace std;
+#include <ostream>
 namespace seneca {
-
-Food::Food() : m_ordered(false), m_child(false), m_customize(nullptr) {}
-
-Food::Food(const Food &other)
-    : Billable(other), m_ordered(other.m_ordered), m_child(other.m_child),
-      m_customize(nullptr) {
-  if (other.m_customize) {
-    ut.alocpy(m_customize, other.m_customize);
-  }
-}
-
+Food::Food(const Food &other) { *this = other; }
 Food &Food::operator=(const Food &other) {
   if (this != &other) {
-    Billable::operator=(other);
+    Billable::operator=(other); // copy base class (name, price)
     m_ordered = other.m_ordered;
     m_child = other.m_child;
     ut.alocpy(m_customize, other.m_customize);
   }
   return *this;
 }
-
-Food::~Food() { delete[] m_customize; }
-
-ostream &Food::print(ostream &ostr) const {
-  const char *n = (const char *)(*this);
-  if (n == nullptr)
-    return ostr;
-
-  int i;
-  int len = ut.strlen(n);
-  int nameLen = len > 25 ? 25 : len;
-
-  // Print name up to 25 chars, left-justified in 28 chars, padded with dots
-  for (i = 0; i < nameLen; i++)
-    ostr << n[i];
-  for (i = nameLen; i < 28; i++)
-    ostr << '.';
-
-  // Print portion type (5 chars)
-  if (ordered()) {
-    if (m_child)
-      ostr << "Child";
-    else
-      ostr << "Adult";
-  } else {
-    ostr << ".....";
-  }
-
-  // Print price right-justified in 7 spaces with 2 decimal places
-  ostr << setw(7) << fixed << setprecision(2) << right << price();
-
-  // Print customizations only to cout
-  if (m_customize && &ostr == &cout) {
-    ostr << " >> ";
-    // Print first 30 characters of customization
-    int custLen = ut.strlen(m_customize);
-    int printLen = custLen > 30 ? 30 : custLen;
-    for (i = 0; i < printLen; i++)
-      ostr << m_customize[i];
-  }
-
-  return ostr;
+Food::~Food() {
+  delete[] m_customize;
+  m_customize = nullptr;
+}
+bool Food::ordered() const { return m_ordered; }
+double Food::price() const {
+  if (m_ordered && m_child)
+    return Billable::price() * 0.5;
+  return Billable::price();
 }
 
-bool Food::order() {
-  Menu portionMenu("Food Size Selection", "Back", 3, 3);
-  portionMenu << "Adult" << "Child";
-  size_t selection = cout << portionMenu;
-  if (selection == 1) {
-    m_ordered = true;
-    m_child = false;
-  } else if (selection == 2) {
-    m_ordered = true;
-    m_child = true;
+std::ostream &Food::print(std::ostream &ostr) const {
+  const char *n = *this;
+
+  int i = 0;
+  if (n) {
+    for (; i < 25 && n[i]; i++)
+      ostr << n[i];
+  }
+  for (; i < 28; i++)
+    ostr << '.';
+
+  // Portion type: 5 chars
+  if (!ordered())
+    ostr << ".....";
+  else
+    ostr << (m_child ? "Child" : "Adult");
+  double p = price();
+  long long cents = (long long)(p * 100.0 + 0.5);
+  long long dollars = cents / 100;
+  int decimal = (int)(cents % 100);
+
+  char tmp[16];
+  int len = 0;
+
+  if (dollars == 0) {
+    tmp[len++] = '0';
   } else {
+    int d = 0;
+    long long temp = dollars;
+    while (temp > 0) {
+      tmp[d++] = '0' + (temp % 10);
+      temp /= 10;
+    }
+    for (int a = 0, b = d - 1; a < b; a++, b--) {
+      char t = tmp[a];
+      tmp[a] = tmp[b];
+      tmp[b] = t;
+    }
+    len = d;
+  }
+  tmp[len++] = '.';
+  tmp[len++] = '0' + decimal / 10;
+  tmp[len++] = '0' + decimal % 10;
+  tmp[len] = '\0';
+
+  for (int s = len; s < 7; s++)
+    ostr << ' ';
+  ostr << tmp;
+  if (m_customize && &ostr == &std::cout) {
+    ostr << " >> ";
+    for (int j = 0; j < 30 && m_customize[j]; j++)
+      ostr << m_customize[j];
+  }
+  return ostr;
+}
+bool Food::order() {
+  std::cout << "Food Size Selection\n"
+            << "   1- Adult\n"
+            << "   2- Child\n"
+            << "   0- Back\n"
+            << "> ";
+
+  int choice = ut.getInt(0, 2);
+
+  if (choice == 0) {
     m_ordered = false;
     delete[] m_customize;
     m_customize = nullptr;
     return false;
   }
 
-  // Prompt for special instructions
-  cout << "Special instructions" << endl;
-  cout << "> ";
-  char buf[256] = {};
-  cin.getline(buf, 256);
-  if (buf[0] == '\0') {
-    delete[] m_customize;
-    m_customize = nullptr;
-  } else {
+  m_child = (choice == 2);
+  m_ordered = true;
+
+  // Prompt for customization
+  std::cout << "Special instructions\n> ";
+  char buf[128] = {};
+  std::cin.getline(buf, 128);
+
+  delete[] m_customize;
+  m_customize = nullptr;
+
+  if (!ut.isspace(buf) && buf[0] != '\0')
     ut.alocpy(m_customize, buf);
-  }
 
   return true;
 }
+std::ifstream &Food::read(std::ifstream &file) {
+  char tempName[128];
+  double tempPrice = 0;
 
-bool Food::ordered() const { return m_ordered; }
+  file.getline(tempName, 128, ',');
+  file >> tempPrice;
+  file.ignore();
 
-ifstream &Food::read(ifstream &file) {
-  char nameBuf[256] = {};
-  double p = 0.0;
-  if (file.getline(nameBuf, 256, ',')) {
-    file >> p;
-    if (file) {
-      file.ignore(1000, '\n');
-      name(nameBuf);
-      Billable::price(p);
-      m_ordered = false;
-      m_child = false;
-      delete[] m_customize;
-      m_customize = nullptr;
-    }
+  if (file) {
+    name(tempName);
+    Billable::price(tempPrice);
+    m_child = false;
+    m_ordered = false;
+    delete[] m_customize;
+    m_customize = nullptr;
   }
   return file;
 }
-
-double Food::price() const {
-  if (m_ordered && m_child) {
-    return Billable::price() / 2.0;
-  }
-  return Billable::price();
-}
-
 } // namespace seneca

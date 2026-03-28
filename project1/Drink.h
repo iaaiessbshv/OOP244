@@ -12,7 +12,7 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2026/03/25  Milestone 3: Drink class declaration
+V1.0    2025/03/26  Milestone 3: Billable , Food, Drink class
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
@@ -21,20 +21,17 @@ that my professor provided to complete my work for function whatever.
 #ifndef SENECA_DRINK_H
 #define SENECA_DRINK_H
 #include "Billable.h"
+#include <fstream>
 namespace seneca {
-
 class Drink : public Billable {
-  char m_size;
+  char m_size = '\0';
 
 public:
-  Drink();
-  std::ostream &print(std::ostream &ostr = std::cout) const override;
+  double price() const override;
   bool order() override;
   bool ordered() const override;
+  std::ostream &print(std::ostream &ostr = std::cout) const override;
   std::ifstream &read(std::ifstream &file) override;
-  double price() const override;
 };
-
 } // namespace seneca
-
-#endif // SENECA_DRINK_H
+#endif // !SENECA_DRINK_H

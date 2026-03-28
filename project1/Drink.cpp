@@ -12,40 +12,81 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2026/03/25  Milestone 3: Drink class implementation
+V1.0    2025/03/26  Milestone 3: Billable , Food, Drink class
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 #include "Drink.h"
-#include "Menu.h"
+#include "Billable.h"
 #include "Utils.h"
-#include <fstream>
-#include <iomanip>
 #include <iostream>
-using namespace std;
+#include <ostream>
 namespace seneca {
+bool Drink::ordered() const {
+  return m_size == 'S' || m_size == 'M' || m_size == 'L' || m_size == 'X';
+}
+bool Drink::order() {
+  std::cout << "Drink Size Selection\n"
+            << "   1- Small\n"
+            << "   2- Medium\n"
+            << "   3- Larg\n"
+            << "   4- Extra Large\n"
+            << "   0- Back\n"
+            << "> ";
+  int choice = ut.getInt(0, 4);
+  switch (choice) {
+  case 1:
+    m_size = 'S';
+    break;
+  case 2:
+    m_size = 'M';
+    break;
+  case 3:
+    m_size = 'L';
+    break;
+  case 4:
+    m_size = 'X';
+    break;
+  case 0:
+    m_size = '\0';
+    break;
+  }
+  return ordered();
+}
+double Drink::price() const {
+  switch (m_size) {
+  case 'S':
+    return Billable::price() * 0.5;
+    break;
+  case 'M':
+    return Billable::price() * 0.75;
+    break;
+  case 'L':
+    return Billable::price();
+    break;
+  case 'X':
+    return Billable::price() * 1.5;
+    break;
+  }
+  return Billable::price();
+}
 
-Drink::Drink() : m_size(0) {}
-
-ostream &Drink::print(ostream &ostr) const {
-  const char *n = (const char *)(*this);
-  if (n == nullptr)
-    return ostr;
-
-  int i;
-  int len = ut.strlen(n);
-  int nameLen = len > 25 ? 25 : len;
-
-  // Print name up to 25 chars, left-justified in 28 chars, padded with dots
-  for (i = 0; i < nameLen; i++)
-    ostr << n[i];
-  for (i = nameLen; i < 28; i++)
+std::ostream &Drink::print(std::ostream &ostr) const {
+  const char *n = operator const char *();
+  int i = 0;
+  if (n) {
+    for (; i < 25 && n[i]; i++) {
+      ostr << n[i];
+    }
+  }
+  for (; i < 28; i++) {
     ostr << '.';
-
-  // Print size (5 chars)
-  if (ordered()) {
+  }
+  if (!ordered()) {
+    ostr << ".....";
+  } else {
     switch (m_size) {
     case 'S':
       ostr << "SML..";
@@ -59,77 +100,56 @@ ostream &Drink::print(ostream &ostr) const {
     case 'X':
       ostr << "XLR..";
       break;
-    default:
-      ostr << ".....";
-      break;
     }
-  } else {
-    ostr << ".....";
   }
 
-  // Print price right-justified in 7 spaces with 2 decimal places
-  ostr << setw(7) << fixed << setprecision(2) << right << price();
+  double p = price();
+  long long cents = (long long)(p * 100.0 + 0.5);
+  long long dollars = cents / 100;
+  int decimal = (int)(cents % 100);
 
+  char tmp[16];
+  int len = 0;
+
+  if (dollars == 0) {
+    tmp[len++] = '0';
+  } else {
+    int d = 0;
+    long long temp = dollars;
+    while (temp > 0) {
+      tmp[d++] = '0' + (temp % 10);
+      temp /= 10;
+    }
+    for (int a = 0, b = d - 1; a < b; a++, b--) {
+      char t = tmp[a];
+      tmp[a] = tmp[b];
+      tmp[b] = t;
+    }
+    len = d;
+  }
+  tmp[len++] = '.';
+  tmp[len++] = '0' + decimal / 10;
+  tmp[len++] = '0' + decimal % 10;
+  tmp[len] = '\0';
+
+  for (int s = len; s < 7; s++)
+    ostr << ' ';
+  ostr << tmp;
   return ostr;
 }
 
-bool Drink::order() {
-  Menu sizeMenu("Drink Size Selection", "Back", 3, 3);
-  sizeMenu << "Small" << "Medium" << "Larg" << "Extra Large";
-  size_t selection = cout << sizeMenu;
-  switch (selection) {
-  case 1:
-    m_size = 'S';
-    break;
-  case 2:
-    m_size = 'M';
-    break;
-  case 3:
-    m_size = 'L';
-    break;
-  case 4:
-    m_size = 'X';
-    break;
-  default:
-    m_size = 0;
-    break;
-  }
-  return ordered();
-}
+std::ifstream &Drink::read(std::ifstream &file) {
+  char tempName[128];
+  double tempPrice = 0;
 
-bool Drink::ordered() const { return m_size != 0; }
-
-ifstream &Drink::read(ifstream &file) {
-  char nameBuf[256] = {};
-  double p = 0.0;
-  if (file.getline(nameBuf, 256, ',')) {
-    file >> p;
-    if (file) {
-      file.ignore(1000, '\n');
-      name(nameBuf);
-      Billable::price(p);
-      m_size = 0;
-    }
+  file.getline(tempName, 128, ',');
+  file >> tempPrice;
+  file.ignore();
+  if (file) {
+    name(tempName);
+    Billable::price(tempPrice);
+    m_size = '\0';
   }
   return file;
 }
-
-double Drink::price() const {
-  double base = Billable::price();
-  if (!ordered())
-    return base;
-  switch (m_size) {
-  case 'S':
-    return base / 2.0;
-  case 'M':
-    return base * 3.0 / 4.0;
-  case 'L':
-    return base;
-  case 'X':
-    return base * 1.5;
-  default:
-    return base;
-  }
-}
-
 } // namespace seneca
