@@ -149,7 +149,7 @@ std::ifstream &Food::read(std::ifstream &file) {
 
   if (file) {
     name(tempName);
-    price(tempPrice);
+    Billable::price(tempPrice);
     m_child = false;
     m_ordered = false;
     delete[] m_customize;

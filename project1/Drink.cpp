@@ -149,7 +149,7 @@ std::ifstream &Drink::read(std::ifstream &file) {
 
   if (file) {
     name(tempName);
-    price(tempPrice);
+    Billable::price(tempPrice);
     m_size = '\0';
   }
   return file;
