@@ -25,8 +25,8 @@ using namespace std;
 namespace seneca {
 Line::Line(const char *label, const unsigned int length)
     : LblShape(label), m_length(length) {
-  if (m_length < ut.strlen(label)) {
-    m_length = ut.strlen(label);
+  if (m_length < (unsigned int)ut.strlen(label)) {
+    m_length = (unsigned int)ut.strlen(label);
   }
 }
 void Line::getSpecs(istream &is) {
@@ -37,7 +37,7 @@ void Line::getSpecs(istream &is) {
 void Line::draw(ostream &os) const {
   if (m_length > 0 && label() != nullptr) {
     os << label() << "\n";
-    for (int i = 0; i < m_length; i++) {
+    for (unsigned int i = 0; i < m_length; i++) {
       os << "=";
     }
   }
