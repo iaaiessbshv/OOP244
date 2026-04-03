@@ -16,6 +16,7 @@ min, int max)
 ***********************************************************************/
 #ifndef SENECA_UTILS_H
 #define SENECA_UTILS_H
+#include <cstddef>
 namespace seneca {
 class Utils {
 public:
@@ -27,6 +28,7 @@ public:
   bool isspace(const char *cstring) const;
   int getInt() const;
   int getInt(int min, int max) const;
+  char *makeBillFileName(char *filename, size_t billNo) const;
 };
 extern Utils ut;
 } // namespace seneca

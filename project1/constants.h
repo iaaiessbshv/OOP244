@@ -12,7 +12,8 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2025/3/9  Ready for submission
+V1.0    2026/3/9  Ready for submission
+v2.0    2026/3/30 Milestone 4: Tax added
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
@@ -23,6 +24,7 @@ that my professor provided to complete my work for function whatever.
 #include <cstddef>
 namespace seneca {
 const size_t MaximumNumberOfMenuItems = 20u;
-}
+const float Tax = 13.0;
+} // namespace seneca
 
 #endif // !SENECA_CONSTANTS_H
