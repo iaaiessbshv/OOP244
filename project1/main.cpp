@@ -51,7 +51,7 @@ int main() {
   // Build exit confirmation menu
   Menu confirmMenu(
       "You have bills that are not saved. Are you sue you want to exit?", "No",
-      1);
+      0);
   confirmMenu << "Yes";
 
   bool running = true;
