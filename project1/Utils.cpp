@@ -89,7 +89,7 @@ int Utils::getInt(int min, int max) const {
   do {
     value = getInt();
     if (value < min || value > max)
-      cout << "Invalid value: [" << min << " <= value <= " << max
+      cout << "Invalid value: [" << min << "<= value <= " << max
            << "], try again: ";
   } while (value < min || value > max);
   return value;
