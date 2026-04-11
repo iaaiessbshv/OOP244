@@ -1,7 +1,7 @@
 /* Citation and Sources...
 -----------------------------------------------------------
 Project Milestone 5
-Module: Main Application
+Module: Main App
 Filename: main.cpp
 -----------------------------------------------------------
 Author: Issa Abishev
@@ -12,7 +12,7 @@ Subject: OOP244NAA
 Revision History
 ------- --------- ------------------------------------------
 Version Date      Reason
-V1.0    2026/04/10  Milestone 5/6: Full Dine-In Digital application
+V1.0    2026/04/10  Milestone 5
 -----------------------------------------------------------
 I have done all the coding by myself and only copied the code
 that my professor provided to complete my work for function whatever.
