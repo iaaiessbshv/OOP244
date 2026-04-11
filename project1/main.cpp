@@ -36,7 +36,7 @@ int main() {
   }
 
   // Build main menu
-  Menu mainMenu("Seneca Restaurant", "End Program");
+  Menu mainMenu("Seneca Restaurant ", "End Program");
   mainMenu << "Order"
            << "Print Bill"
            << "Start a New Bill"
