@@ -45,7 +45,7 @@ ostream &Ordering::printTotal(ostream &ostr, double value) const {
   ostr.precision(2);
   ostr << "                     Total:         " << value << endl
        << "                     Tax:           " << tax_amount << endl
-       << "                     Total+Tax:    " << grand_total << endl
+       << "                     Total+Tax:     " << grand_total << endl
        << "========================================" << endl;
   ostr.unsetf(ios::fixed);
   return ostr;
