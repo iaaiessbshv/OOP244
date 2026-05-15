@@ -1,13 +1,21 @@
-/*
-Workshop 1
+/* Citation and Sources...
+-----------------------------------------------------------
+Assignment 1
+Module: cstr
 Filename: cstr.cpp
 -----------------------------------------------------------
 Author: Issa Abishev
-Student number: 175980234
+Student number: 175-980-234
 Email: iabishev@myseneca.ca
-Subject: OOP244NAA
+Subject: OOP244NRA
 -----------------------------------------------------------
-I have done all the coding by myself
+Revision History
+------- --------- ------------------------------------------
+Version Date      Reason
+V1.0    2026/5/15  Ready for submission
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 
@@ -16,111 +24,111 @@ I have done all the coding by myself
 namespace seneca {
 
 char *strcat(char *des, const char *src) {
-    size_t len = strlen(des);
-    size_t i = 0;
-    while (des && src && src[i]) {
-        des[i + len] = src[i];
-        i++;
-    }
-    des[i + len] = char(0);
-    return des;
+  size_t len = strlen(des);
+  size_t i = 0;
+  while (des && src && src[i]) {
+    des[i + len] = src[i];
+    i++;
+  }
+  des[i + len] = char(0);
+  return des;
 }
 
 char tolower(char ch) {
-    if (ch >= 'A' && ch <= 'Z') {
-        ch += ('a' - 'A');
-    }
-    return ch;
+  if (ch >= 'A' && ch <= 'Z') {
+    ch += ('a' - 'A');
+  }
+  return ch;
 }
 
 char *tolower(char *des, const char *src) {
-    size_t i = 0;
-    for (; des && src && src[i]; i++) {
-        des[i] = tolower(src[i]);
-    }
-    des[i] = char(0);
-    return des;
+  size_t i = 0;
+  for (; des && src && src[i]; i++) {
+    des[i] = tolower(src[i]);
+  }
+  des[i] = char(0);
+  return des;
 }
 
 char *tolower(char *str) {
-    for (size_t i = 0; str && str[i]; i++) {
-        str[i] = tolower(str[i]);
-    }
-    return str;
+  for (size_t i = 0; str && str[i]; i++) {
+    str[i] = tolower(str[i]);
+  }
+  return str;
 }
 
 int strcmp(const char *s1, const char *s2) {
-    size_t i{};
-    for (i = 0; s1[i] && s2[i] && s1[i] == s2[i]; i++)
-        ;
-    return s1[i] - s2[i];
+  size_t i{};
+  for (i = 0; s1[i] && s2[i] && s1[i] == s2[i]; i++)
+    ;
+  return s1[i] - s2[i];
 }
 
 int strcmp(const char *s1, const char *s2, size_t len) {
-    size_t i{};
-    while (i < len - 1 && s1[i] && s2[i] && s1[i] == s2[i]) {
-        i++;
-    }
-    return s1[i] - s2[i];
+  size_t i{};
+  while (i < len - 1 && s1[i] && s2[i] && s1[i] == s2[i]) {
+    i++;
+  }
+  return s1[i] - s2[i];
 }
 
 char *strcpy(char *des, const char *src) {
-    size_t i;
-    for (i = 0; src[i]; i++) {
-        des[i] = src[i];
-    }
-    des[i] = char(0);
-    return des;
+  size_t i;
+  for (i = 0; src[i]; i++) {
+    des[i] = src[i];
+  }
+  des[i] = char(0);
+  return des;
 }
 
 char *strcpy(char *des, const char *src, size_t len) {
-    size_t i;
-    for (i = 0; i < len && src[i]; i++) {
-        des[i] = src[i];
-    }
-    des[i] = char(0);
-    return des;
+  size_t i;
+  for (i = 0; i < len && src[i]; i++) {
+    des[i] = src[i];
+  }
+  des[i] = char(0);
+  return des;
 }
 
 char *strncpy(char *des, const char *src, size_t len) {
-    size_t i = 0;
-    while (i < len - 1 && src[i]) {
-        des[i] = src[i];
-        i++;
-    }
+  size_t i = 0;
+  while (i < len - 1 && src[i]) {
     des[i] = src[i];
-    return des;
+    i++;
+  }
+  des[i] = src[i];
+  return des;
 }
 
 size_t strlen(const char *str) {
-    size_t len{};
-    for (len = 0; str && str[len]; len++)
-        ;
-    return len;
+  size_t len{};
+  for (len = 0; str && str[len]; len++)
+    ;
+  return len;
 }
 
 const char *strstr(const char *str, const char *toFind) {
-    const char *faddress = nullptr;
-    size_t flen = strlen(toFind);
-    size_t slen = strlen(str);
+  const char *faddress = nullptr;
+  size_t flen = strlen(toFind);
+  size_t slen = strlen(str);
 
-    size_t i;
-    for (i = 0;
-         flen <= slen && i <= slen - flen && strcmp(&str[i], toFind, flen); i++)
-        ;
+  size_t i;
+  for (i = 0; flen <= slen && i <= slen - flen && strcmp(&str[i], toFind, flen);
+       i++)
+    ;
 
-    if (flen <= slen && i <= slen - flen) {
-        faddress = &str[i];
-    }
-    return faddress;
+  if (flen <= slen && i <= slen - flen) {
+    faddress = &str[i];
+  }
+  return faddress;
 }
 
 bool isalpha(char ch) {
-    return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
+  return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
 }
 
 bool isspace(char ch) {
-    return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\v' || ch == '\f' ||
-           ch == '\r';
+  return ch == ' ' || ch == '\t' || ch == '\n' || ch == '\v' || ch == '\f' ||
+         ch == '\r';
 }
 } // namespace seneca

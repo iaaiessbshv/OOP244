@@ -1,13 +1,21 @@
-/*
-Workshop 1
+/* Citation and Sources...
+-----------------------------------------------------------
+Assignment 1
+Module: io
 Filename: io.h
 -----------------------------------------------------------
 Author: Issa Abishev
-Student number: 175980234
+Student number: 175-980-234
 Email: iabishev@myseneca.ca
-Subject: OOP244NAA
+Subject: OOP244NRA
 -----------------------------------------------------------
-I have done all the coding by myself
+Revision History
+------- --------- ------------------------------------------
+Version Date      Reason
+V1.0    2026/5/15  Ready for submission
+-----------------------------------------------------------
+I have done all the coding by myself and only copied the code
+that my professor provided to complete my work for function whatever.
 -----------------------------------------------------------
 */
 
@@ -20,9 +28,9 @@ I have done all the coding by myself
 namespace seneca {
 
 struct PhoneRec {
-        char name[16];
-        char lastname[26];
-        long long phone;
+  char name[16];
+  char lastname[26];
+  long long phone;
 };
 
 void read(char *name);
